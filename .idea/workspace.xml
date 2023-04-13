@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80ff9c18-bae0-498f-a534-919cc2dcecf9" name="Changes" comment="" />
+    <list default="true" id="80ff9c18-bae0-498f-a534-919cc2dcecf9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/controllers/PopoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/controllers/PopoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/dtos/PostCustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/dtos/PostCustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload/image_1681311645799/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload/image_1681312251726/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload/image_1681312431854/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload/image_1681312534358/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload/image_1681312558511/559128.jpg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +35,6 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
@@ -51,6 +59,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "spring.configuration.checksum": "362080e5689a8396271215461a4dd9dd",
     "vue.rearranger.settings.migration": "true"
   },
@@ -78,7 +87,8 @@
       <option name="presentableId" value="Default" />
       <updated>1681236744448</updated>
       <workItem from="1681236745810" duration="184000" />
-      <workItem from="1681237081841" duration="20152000" />
+      <workItem from="1681237081841" duration="21571000" />
+      <workItem from="1681319059240" duration="4880000" />
     </task>
     <servers />
   </component>

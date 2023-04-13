@@ -18,11 +18,19 @@ public class PopoteController {
 
     private final PopotoService popotoService;
 
-    @PostMapping(value = "/customer", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public PostCustomerDTO postCustomer(
             @ModelAttribute PostCustomerDTO postCustomerDTO,
             @RequestParam("image") MultipartFile image) throws IOException {
         popotoService.AddCustomerAndImage(postCustomerDTO, image);
         return postCustomerDTO;
     }
+
+    // Update Image
+    // Delete Image
+    // Update Customer And Image
+    // Get Customers and Image
+    // Delete Customer and Image
+
+    // Resolve Bug Image
 }
