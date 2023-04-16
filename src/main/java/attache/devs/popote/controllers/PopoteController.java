@@ -27,22 +27,31 @@ public class PopoteController {
         return popotoService.AddCustomerAndImage(postCustomerDTO, image);
     }
 
-    // Update Image /customers/{Id}
+    // Add Image by Cusomer /customers/{id}/image POST (1)
+     /*
+           - Get CustomerById
+           - Customer phoneNumber And Post Image
+      */
+
+    // Update Image /customers/{Id}  (5)
     /*
          Call update customer
-         Call update image
+         Call update image BD
+         Call Update File Image Upload
      */
-    // delete Image /image/{Id}
 
-    // Get Customers and Image
+    // delete Image /image/{Id}  (4)
+    // -> toDelete Customers
+    // -> fileUpload
+
+    // Get Customers and Image (2)
     /*
        - Affiche les infos customer
        - Affiche les infos image
      */
 
-    // GetById Customers and Image /customers/{Id}
+    // GetById Customers and Image /customers/{Id} (3)
     // Delete Customers
     // -> Call delete Image By Cusomter
 
-    // Resolve bug Image
 }
