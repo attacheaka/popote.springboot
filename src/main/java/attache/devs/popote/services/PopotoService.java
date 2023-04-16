@@ -1,5 +1,6 @@
 package attache.devs.popote.services;
 import attache.devs.popote.dtos.PostCustomerDTO;
+import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
 import attache.devs.popote.mappers.PopoteMapper;
 import attache.devs.popote.models.Customer;
 import attache.devs.popote.models.CustomerImage;
@@ -30,13 +31,20 @@ public class PopotoService {
     private final CustomerImageRepository customerImageRepository;
     private final PopoteMapper popoteMapper;
 
-    public void AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
+
+    public ResponseCustomerAndImageDTO AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
         Customer customer = popoteMapper.fromPostCustomerDTO(postCustomerDTO);
-        saveImage(postCustomerDTO, image);
+        CustomerImage customerImage = saveImage(postCustomerDTO, image);
         customerRepository.save(customer);
+
+        ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
+        responseCustomerAndImageDTO.setPostCustomerDTO(postCustomerDTO);
+        responseCustomerAndImageDTO.setUrlImage(customerImage.getUrl());
+
+        return responseCustomerAndImageDTO;
     }
 
-    private void saveImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
+    private CustomerImage saveImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
 
         String filename = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
         String uniqueFilename = "image_" + System.currentTimeMillis();
@@ -56,6 +64,8 @@ public class PopotoService {
             customerImage.setCustomerPhone(postCustomerDTO.getPhoneNumber());
             customerImage.setUrl(url);
             customerImageRepository.save(customerImage);
+
+            return customerImage;
         }
     }
 }

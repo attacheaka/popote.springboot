@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="80ff9c18-bae0-498f-a534-919cc2dcecf9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/controllers/PopoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/controllers/PopoteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/dtos/PostCustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/dtos/PostCustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/image_1681311645799/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/image_1681312251726/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/image_1681312431854/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/image_1681312534358/108998493_334803201018098_766901297297794619_n.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/image_1681312558511/559128.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/dtos/PostCustomerImageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/dtos/PostCustomerImageDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/services/PopotoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/services/PopotoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,30 +44,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "spring.configuration.checksum": "362080e5689a8396271215461a4dd9dd",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;362080e5689a8396271215461a4dd9dd&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="PopoteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="popote" />
@@ -88,7 +87,8 @@
       <updated>1681236744448</updated>
       <workItem from="1681236745810" duration="184000" />
       <workItem from="1681237081841" duration="21571000" />
-      <workItem from="1681319059240" duration="4880000" />
+      <workItem from="1681319059240" duration="6559000" />
+      <workItem from="1681656808292" duration="6893000" />
     </task>
     <servers />
   </component>
