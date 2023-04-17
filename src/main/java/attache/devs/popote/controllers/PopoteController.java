@@ -1,6 +1,6 @@
 package attache.devs.popote.controllers;
 
-import attache.devs.popote.dtos.PostCustomerDTO;
+import attache.devs.popote.dtos.CustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
 import attache.devs.popote.exceptions.CustomerImageNotFoundException;
 import attache.devs.popote.exceptions.CustomerNotFoundException;
@@ -25,16 +25,16 @@ public class PopoteController {
 
     @PostMapping(value = "/customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseCustomerAndImageDTO postCustomer(
-            @ModelAttribute PostCustomerDTO postCustomerDTO,
+            @ModelAttribute CustomerDTO customerDTO,
             @RequestParam(value = "image", required = false) MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
 
-        return popotoService.AddCustomerAndImage(postCustomerDTO, image);
+        return popotoService.AddCustomerAndImage(customerDTO, image);
     }
 
     @PutMapping("/customers/{customerId}")
-    public PostCustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody PostCustomerDTO postCustomerDTO){
-        postCustomerDTO.setId(customerId);
-        return popotoService.updateCustomer(postCustomerDTO);
+    public CustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody CustomerDTO customerDTO){
+        customerDTO.setId(customerId);
+        return popotoService.updateCustomer(customerDTO);
     }
 
     @DeleteMapping("/customers/{customerId}")

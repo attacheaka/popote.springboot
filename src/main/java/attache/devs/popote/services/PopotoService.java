@@ -1,5 +1,5 @@
 package attache.devs.popote.services;
-import attache.devs.popote.dtos.PostCustomerDTO;
+import attache.devs.popote.dtos.CustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
 import attache.devs.popote.exceptions.CustomerImageNotFoundException;
 import attache.devs.popote.exceptions.CustomerNotFoundException;
@@ -43,11 +43,11 @@ public class PopotoService {
     private final FileValidator fileValidator;
 
 
-    public ResponseCustomerAndImageDTO AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
-        Customer customer = popoteMapper.fromPostCustomerDTO(postCustomerDTO);
+    public ResponseCustomerAndImageDTO AddCustomerAndImage(CustomerDTO customerDTO, MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
+        Customer customer = popoteMapper.fromPostCustomerDTO(customerDTO);
         customerRepository.save(customer);
         ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
-        responseCustomerAndImageDTO.setPostCustomerDTO(postCustomerDTO);
+        responseCustomerAndImageDTO.setCustomerDTO(customerDTO);
 
         if(image != null && !image.isEmpty()) {
             CustomerImage customerImage = saveImage(customer, image);
@@ -58,8 +58,8 @@ public class PopotoService {
 
     }
 
-    public PostCustomerDTO updateCustomer(PostCustomerDTO postCustomerDTO) {
-        Customer customer = popoteMapper.fromPostCustomerDTO(postCustomerDTO);
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
+        Customer customer = popoteMapper.fromPostCustomerDTO(customerDTO);
         Customer savedCustomer = customerRepository.save(customer);
         return popoteMapper.fromCustomer(savedCustomer);
     }

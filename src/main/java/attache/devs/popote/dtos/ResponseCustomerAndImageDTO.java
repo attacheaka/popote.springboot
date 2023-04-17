@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ResponseCustomerAndImageDTO {
-    private PostCustomerDTO postCustomerDTO;
+    private CustomerDTO customerDTO;
     private String urlImage;
 }
