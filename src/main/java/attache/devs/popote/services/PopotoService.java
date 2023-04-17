@@ -6,9 +6,12 @@ import attache.devs.popote.models.Customer;
 import attache.devs.popote.models.CustomerImage;
 import attache.devs.popote.repositories.CustomerImageRepository;
 import attache.devs.popote.repositories.CustomerRepository;
+import attache.devs.popote.utils.FileParams;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,17 +22,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 
 @Service
 @Transactional
 @AllArgsConstructor
 @Slf4j
+@PropertySource("classpath:application.properties")
 public class PopotoService {
 
     private final CustomerRepository customerRepository;
     private final CustomerImageRepository customerImageRepository;
     private final PopoteMapper popoteMapper;
+    private final FileParams fileParams;
 
 
     public ResponseCustomerAndImageDTO AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
@@ -39,7 +43,7 @@ public class PopotoService {
         responseCustomerAndImageDTO.setPostCustomerDTO(postCustomerDTO);
 
         if(image != null && !image.isEmpty()) {
-            CustomerImage customerImage = saveImage(postCustomerDTO, image);
+            CustomerImage customerImage = saveImage(customer, image);
             responseCustomerAndImageDTO.setUrlImage(customerImage.getUrl());
         }
 
@@ -47,13 +51,13 @@ public class PopotoService {
 
     }
 
-    private CustomerImage saveImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
+    private CustomerImage saveImage(Customer customer, MultipartFile image) throws IOException {
 
-        String filename = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
-        String uniqueFilename = "image_" + System.currentTimeMillis();
-        String uploadDir = "upload/";
-        Path imagePath = Paths.get(uploadDir, uniqueFilename);
-        String url = uploadDir + uniqueFilename + "/" + filename;
+        String uniqueFilename = "customer_" + customer.getId();
+        String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+        String filename = StringUtils.cleanPath(uniqueFilename + '.'  + extension);
+        Path imagePath = Paths.get(fileParams.customerDir());
+        String url = fileParams.baseUrl() + fileParams.customerDir() + "/" + filename;
 
         if (!Files.exists(imagePath)) {
             Files.createDirectories(imagePath);
@@ -64,7 +68,7 @@ public class PopotoService {
 
             CustomerImage customerImage = new CustomerImage();
             customerImage.setName(image.getOriginalFilename());
-            customerImage.setCustomerPhone(postCustomerDTO.getPhoneNumber());
+            customerImage.setCustomerPhone(customer.getPhoneNumber());
             customerImage.setUrl(url);
             customerImageRepository.save(customerImage);
 
