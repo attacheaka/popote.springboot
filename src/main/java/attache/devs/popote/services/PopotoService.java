@@ -62,6 +62,24 @@ public class PopotoService {
         return dtos;
     }
 
+    public List<ResponseCustomerAndImageDTO> getCustomersById(Long customerId) {
+        List<Object[]> results = customerRepository.findCustomerWithImagesById(customerId);
+        List<ResponseCustomerAndImageDTO> dtos = new ArrayList<>();
+        for (Object[] result : results) {
+            Customer customer = (Customer) result[0];
+            CustomerImage customerImage = (CustomerImage) result[1];
+            CustomerDTO customerDTO = popoteMapper.fromCustomer(customer);
+
+            ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
+            responseCustomerAndImageDTO.setCustomerDTO(customerDTO);
+            responseCustomerAndImageDTO.setUrlImage(customerImage.getUrl());
+            dtos.add(responseCustomerAndImageDTO);
+        }
+
+        return dtos;
+
+    }
+
     public ResponseCustomerAndImageDTO AddCustomerAndImage(CustomerDTO customerDTO, MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
         Customer customer = popoteMapper.fromPostCustomerDTO(customerDTO);
         customerRepository.save(customer);

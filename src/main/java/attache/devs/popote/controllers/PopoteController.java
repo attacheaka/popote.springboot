@@ -29,6 +29,11 @@ public class PopoteController {
         return popotoService.getAllCustomersWithImages();
     }
 
+    @GetMapping("/customers/{customerId}")
+    public List<ResponseCustomerAndImageDTO> getCustomerById(@PathVariable Long customerId) {
+        return popotoService.getCustomersById(customerId);
+    }
+
     @PostMapping(value = "/customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseCustomerAndImageDTO postCustomer(
             @ModelAttribute CustomerDTO customerDTO,
