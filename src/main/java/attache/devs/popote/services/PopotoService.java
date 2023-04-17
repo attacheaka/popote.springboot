@@ -1,6 +1,7 @@
 package attache.devs.popote.services;
 import attache.devs.popote.dtos.PostCustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
+import attache.devs.popote.exceptions.CustomerImageNotFoundException;
 import attache.devs.popote.exceptions.CustomerNotFoundException;
 import attache.devs.popote.exceptions.FileIsNotImageException;
 import attache.devs.popote.exceptions.FileSizeNotValidException;
@@ -26,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -56,7 +58,7 @@ public class PopotoService {
 
     }
 
-    public void deleteCustomerAndImage(Long id) throws CustomerNotFoundException, IOException {
+    public void deleteCustomerAndImage(Long id) throws CustomerNotFoundException {
         Customer customer = this.getCustomer(id);
         CustomerImage customerImage = this.getImage(customer.getPhoneNumber());
         if(customerImage != null) {
@@ -64,6 +66,24 @@ public class PopotoService {
             deleteCustomerImage(customerImage.getName());
         }
         customerRepository.delete(customer);
+    }
+
+
+    public void updateImageCustomer(Long customerId, MultipartFile image) throws CustomerNotFoundException, IOException, FileIsNotImageException, FileSizeNotValidException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Not found"));
+        saveImage(customer, image);
+    }
+
+    public void deleteImageCustomer(Long customerId) throws CustomerImageNotFoundException, CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Not found"));
+        CustomerImage customerImage = customerImageRepository.findFirstByCustomerPhone(customer.getPhoneNumber());
+        if(customerImage == null) {
+            throw new CustomerImageNotFoundException("CustomerImage Not found");
+        }
+        customerImageRepository.delete(customerImage);
+        deleteCustomerImage(customerImage.getName());
     }
 
 
@@ -113,12 +133,20 @@ public class PopotoService {
     }
 
 
-    private void deleteCustomerImage(String imageName) throws IOException {
-        Path imagePath = Paths.get(fileParams.customerDir(), imageName);
-        try {
-            Files.deleteIfExists(imagePath);
+    private void deleteCustomerImage(String imageName) {
+        String image = imageName.substring(0, imageName.lastIndexOf('.'));
+        Path baseDir = Paths.get(fileParams.customerDir());
+        try (Stream<Path> stream = Files.walk(baseDir)) {
+            stream.filter(path -> path.getFileName().toString().startsWith(image))
+                    .forEach(path -> {
+                        try {
+                            Files.deleteIfExists(path);
+                        } catch (IOException ex) {
+                            throw new RuntimeException("Failed to delete customer image: " + ex.getMessage(), ex);
+                        }
+                    });
         } catch (IOException ex) {
-            throw new IOException("Failed to delete customer image: " + ex.getMessage());
+            throw new RuntimeException("Failed to delete customer images: " + ex.getMessage(), ex);
         }
     }
 

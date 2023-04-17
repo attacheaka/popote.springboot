@@ -31,10 +31,22 @@ public class PopoteController {
         return popotoService.AddCustomerAndImage(postCustomerDTO, image);
     }
 
-    @DeleteMapping("/customers/{id}")
-    public void deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException, CustomerImageNotFoundException, IOException {
-        popotoService.deleteCustomerAndImage(id);
+    @DeleteMapping("/customers/{customerId}")
+    public void deleteCustomer(@PathVariable Long customerId) throws CustomerNotFoundException, CustomerImageNotFoundException, IOException {
+        popotoService.deleteCustomerAndImage(customerId);
     }
+
+    @PutMapping("/customers/{customerId}/image")
+    public void updateImageCustomer(@PathVariable Long customerId, @RequestParam(value = "image") MultipartFile image) throws IOException, CustomerNotFoundException, FileIsNotImageException, FileSizeNotValidException {
+        popotoService.updateImageCustomer(customerId, image);
+    }
+
+    @DeleteMapping("/customers/{customerId}/image")
+    public void deleteImageCustomer(@PathVariable Long customerId) throws CustomerImageNotFoundException, IOException, CustomerNotFoundException {
+        popotoService.deleteImageCustomer(customerId);
+    }
+
+
 
 
 
