@@ -58,12 +58,19 @@ public class PopotoService {
 
     }
 
+    public PostCustomerDTO updateCustomer(PostCustomerDTO postCustomerDTO) {
+        Customer customer = popoteMapper.fromPostCustomerDTO(postCustomerDTO);
+        Customer savedCustomer = customerRepository.save(customer);
+        return popoteMapper.fromCustomer(savedCustomer);
+    }
+
+
     public void deleteCustomerAndImage(Long id) throws CustomerNotFoundException {
         Customer customer = this.getCustomer(id);
         CustomerImage customerImage = this.getImage(customer.getPhoneNumber());
         if(customerImage != null) {
             customerImageRepository.delete(customerImage);
-            deleteCustomerImage(customerImage.getName());
+            deleteDirImageCustomer(customerImage.getName());
         }
         customerRepository.delete(customer);
     }
@@ -83,44 +90,11 @@ public class PopotoService {
             throw new CustomerImageNotFoundException("CustomerImage Not found");
         }
         customerImageRepository.delete(customerImage);
-        deleteCustomerImage(customerImage.getName());
+        deleteDirImageCustomer(customerImage.getName());
     }
 
-
-    // Add Image by Cusomer /customers/{id}/image POST (1)
-     /*
-           - Get CustomerById
-           - Customer phoneNumber And Post Image
-      */
-
-    // Update Image /customers/{Id}  (5)
     /*
-         Call update customer
-         Call update image BD
-         Call Update File Image Upload
-     */
-
-    // delete Image /image/{Id}  (4)
-    // -> toDelete Customers
-    // -> fileUpload
-
-    // Get Customers and Image (2)
-    /*
-       - Affiche les infos customer
-       - Affiche les infos image
-     */
-
-    // GetById Customers and Image /customers/{Id} (3)
-    // Delete Customers
-    // -> Call delete Image By Cusomter
-
-
-    /*
-         - Private GetCustomerById return Customer
-         - Private GetImageByPhone
-         - Private DeleteImage
-                - Delete BD
-                - Delete SourceFIle
+         Private Class
      */
 
     private Customer getCustomer(Long customerId) throws CustomerNotFoundException {
@@ -133,7 +107,7 @@ public class PopotoService {
     }
 
 
-    private void deleteCustomerImage(String imageName) {
+    private void deleteDirImageCustomer(String imageName) {
         String image = imageName.substring(0, imageName.lastIndexOf('.'));
         Path baseDir = Paths.get(fileParams.customerDir());
         try (Stream<Path> stream = Files.walk(baseDir)) {

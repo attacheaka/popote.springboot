@@ -31,10 +31,17 @@ public class PopoteController {
         return popotoService.AddCustomerAndImage(postCustomerDTO, image);
     }
 
+    @PutMapping("/customers/{customerId}")
+    public PostCustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody PostCustomerDTO postCustomerDTO){
+        postCustomerDTO.setId(customerId);
+        return popotoService.updateCustomer(postCustomerDTO);
+    }
+
     @DeleteMapping("/customers/{customerId}")
-    public void deleteCustomer(@PathVariable Long customerId) throws CustomerNotFoundException, CustomerImageNotFoundException, IOException {
+    public void deleteCustomer(@PathVariable Long customerId) throws CustomerNotFoundException {
         popotoService.deleteCustomerAndImage(customerId);
     }
+
 
     @PutMapping("/customers/{customerId}/image")
     public void updateImageCustomer(@PathVariable Long customerId, @RequestParam(value = "image") MultipartFile image) throws IOException, CustomerNotFoundException, FileIsNotImageException, FileSizeNotValidException {
@@ -42,39 +49,9 @@ public class PopoteController {
     }
 
     @DeleteMapping("/customers/{customerId}/image")
-    public void deleteImageCustomer(@PathVariable Long customerId) throws CustomerImageNotFoundException, IOException, CustomerNotFoundException {
+    public void deleteImageCustomer(@PathVariable Long customerId) throws CustomerImageNotFoundException, CustomerNotFoundException {
         popotoService.deleteImageCustomer(customerId);
     }
 
-
-
-
-
-    // Add Image by Cusomer /customers/{id}/image POST (1)
-     /*
-           - Get CustomerById
-           - Customer phoneNumber And Post Image
-      */
-
-    // Update Image /customers/{Id}  (5)
-    /*
-         Call update customer
-         Call update image BD
-         Call Update File Image Upload
-     */
-
-    // delete Image /image/{Id}  (4)
-    // -> toDelete Customers
-    // -> fileUpload
-
-    // Get Customers and Image (2)
-    /*
-       - Affiche les infos customer
-       - Affiche les infos image
-     */
-
-    // GetById Customers and Image /customers/{Id} (3)
-    // Delete Customers
-    // -> Call delete Image By Cusomter
 
 }
