@@ -27,6 +27,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -43,6 +45,23 @@ public class PopotoService {
     private final FileValidator fileValidator;
 
 
+    public List<ResponseCustomerAndImageDTO> getAllCustomersWithImages() {
+        List<Object[]> results = customerRepository.findAllCustomersWithImages();
+        List<ResponseCustomerAndImageDTO> dtos = new ArrayList<>();
+        for (Object[] result : results) {
+            Customer customer = (Customer) result[0];
+            CustomerImage customerImage = (CustomerImage) result[1];
+            CustomerDTO customerDTO = popoteMapper.fromCustomer(customer);
+
+            ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
+            responseCustomerAndImageDTO.setCustomerDTO(customerDTO);
+            responseCustomerAndImageDTO.setUrlImage(customerImage.getUrl());
+            dtos.add(responseCustomerAndImageDTO);
+        }
+
+        return dtos;
+    }
+
     public ResponseCustomerAndImageDTO AddCustomerAndImage(CustomerDTO customerDTO, MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
         Customer customer = popoteMapper.fromPostCustomerDTO(customerDTO);
         customerRepository.save(customer);
@@ -55,8 +74,9 @@ public class PopotoService {
         }
 
         return responseCustomerAndImageDTO;
-
     }
+
+
 
     public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
         Customer customer = popoteMapper.fromPostCustomerDTO(customerDTO);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -22,6 +23,11 @@ import java.io.IOException;
 public class PopoteController {
 
     private final PopotoService popotoService;
+
+    @GetMapping("/customers")
+    public List<ResponseCustomerAndImageDTO> getAllCustomersWithImages() {
+        return popotoService.getAllCustomersWithImages();
+    }
 
     @PostMapping(value = "/customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseCustomerAndImageDTO postCustomer(
