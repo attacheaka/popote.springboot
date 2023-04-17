@@ -35,23 +35,15 @@ public class PopotoService {
     public ResponseCustomerAndImageDTO AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
         Customer customer = popoteMapper.fromPostCustomerDTO(postCustomerDTO);
         customerRepository.save(customer);
+        ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
+        responseCustomerAndImageDTO.setPostCustomerDTO(postCustomerDTO);
 
         if(image != null && !image.isEmpty()) {
             CustomerImage customerImage = saveImage(postCustomerDTO, image);
-
-            ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
-            responseCustomerAndImageDTO.setPostCustomerDTO(postCustomerDTO);
             responseCustomerAndImageDTO.setUrlImage(customerImage.getUrl());
-
-            return responseCustomerAndImageDTO;
-        } else {
-
-            ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
-            responseCustomerAndImageDTO.setPostCustomerDTO(postCustomerDTO);
-            responseCustomerAndImageDTO.setUrlImage(null);
-
-            return responseCustomerAndImageDTO;
         }
+
+        return responseCustomerAndImageDTO;
 
     }
 
