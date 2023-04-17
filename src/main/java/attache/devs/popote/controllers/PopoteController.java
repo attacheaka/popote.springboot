@@ -2,6 +2,8 @@ package attache.devs.popote.controllers;
 
 import attache.devs.popote.dtos.PostCustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
+import attache.devs.popote.exceptions.CustomerImageNotFoundException;
+import attache.devs.popote.exceptions.CustomerNotFoundException;
 import attache.devs.popote.exceptions.FileIsNotImageException;
 import attache.devs.popote.exceptions.FileSizeNotValidException;
 import attache.devs.popote.services.PopotoService;
@@ -28,6 +30,13 @@ public class PopoteController {
 
         return popotoService.AddCustomerAndImage(postCustomerDTO, image);
     }
+
+    @DeleteMapping("/customers/{id}")
+    public void deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException, CustomerImageNotFoundException, IOException {
+        popotoService.deleteCustomerAndImage(id);
+    }
+
+
 
     // Add Image by Cusomer /customers/{id}/image POST (1)
      /*

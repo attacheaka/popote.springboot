@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="80ff9c18-bae0-498f-a534-919cc2dcecf9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/controllers/PopoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/controllers/PopoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/exceptions/MessageExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/exceptions/MessageExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/mappers/PopoteMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/mappers/PopoteMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/repositories/CustomerImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/repositories/CustomerImageRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/attache/devs/popote/services/PopotoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/attache/devs/popote/services/PopotoService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +87,7 @@
       <workItem from="1681236745810" duration="184000" />
       <workItem from="1681237081841" duration="21571000" />
       <workItem from="1681319059240" duration="6559000" />
-      <workItem from="1681656808292" duration="15346000" />
+      <workItem from="1681656808292" duration="21494000" />
     </task>
     <servers />
   </component>

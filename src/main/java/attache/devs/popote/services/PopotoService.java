@@ -1,6 +1,7 @@
 package attache.devs.popote.services;
 import attache.devs.popote.dtos.PostCustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
+import attache.devs.popote.exceptions.CustomerNotFoundException;
 import attache.devs.popote.exceptions.FileIsNotImageException;
 import attache.devs.popote.exceptions.FileSizeNotValidException;
 import attache.devs.popote.mappers.PopoteMapper;
@@ -55,6 +56,73 @@ public class PopotoService {
 
     }
 
+    public void deleteCustomerAndImage(Long id) throws CustomerNotFoundException, IOException {
+        Customer customer = this.getCustomer(id);
+        CustomerImage customerImage = this.getImage(customer.getPhoneNumber());
+        if(customerImage != null) {
+            customerImageRepository.delete(customerImage);
+            deleteCustomerImage(customerImage.getName());
+        }
+        customerRepository.delete(customer);
+    }
+
+
+    // Add Image by Cusomer /customers/{id}/image POST (1)
+     /*
+           - Get CustomerById
+           - Customer phoneNumber And Post Image
+      */
+
+    // Update Image /customers/{Id}  (5)
+    /*
+         Call update customer
+         Call update image BD
+         Call Update File Image Upload
+     */
+
+    // delete Image /image/{Id}  (4)
+    // -> toDelete Customers
+    // -> fileUpload
+
+    // Get Customers and Image (2)
+    /*
+       - Affiche les infos customer
+       - Affiche les infos image
+     */
+
+    // GetById Customers and Image /customers/{Id} (3)
+    // Delete Customers
+    // -> Call delete Image By Cusomter
+
+
+    /*
+         - Private GetCustomerById return Customer
+         - Private GetImageByPhone
+         - Private DeleteImage
+                - Delete BD
+                - Delete SourceFIle
+     */
+
+    private Customer getCustomer(Long customerId) throws CustomerNotFoundException {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Not found"));
+    }
+
+    private CustomerImage getImage(String customerPhone) {
+        return customerImageRepository.findFirstByCustomerPhone(customerPhone);
+    }
+
+
+    private void deleteCustomerImage(String imageName) throws IOException {
+        Path imagePath = Paths.get(fileParams.customerDir(), imageName);
+        try {
+            Files.deleteIfExists(imagePath);
+        } catch (IOException ex) {
+            throw new IOException("Failed to delete customer image: " + ex.getMessage());
+        }
+    }
+
+
     private CustomerImage saveImage(Customer customer, MultipartFile image) throws FileIsNotImageException, FileSizeNotValidException, IOException {
 
         if (!fileValidator.isImage(image)) {
@@ -79,7 +147,7 @@ public class PopotoService {
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 
             CustomerImage customerImage = new CustomerImage();
-            customerImage.setName(image.getOriginalFilename());
+            customerImage.setName(filename);
             customerImage.setCustomerPhone(customer.getPhoneNumber());
             customerImage.setUrl(url);
             customerImageRepository.save(customerImage);
@@ -87,4 +155,6 @@ public class PopotoService {
             return customerImage;
         }
     }
+
+
 }
