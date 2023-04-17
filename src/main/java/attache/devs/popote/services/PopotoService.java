@@ -16,7 +16,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +34,6 @@ import java.util.stream.Stream;
 @Transactional
 @AllArgsConstructor
 @Slf4j
-@PropertySource("classpath:application.properties")
 public class PopotoService {
 
     private final CustomerRepository customerRepository;
@@ -47,23 +45,16 @@ public class PopotoService {
 
     public List<ResponseCustomerAndImageDTO> getAllCustomersWithImages() {
         List<Object[]> results = customerRepository.findAllCustomersWithImages();
-        List<ResponseCustomerAndImageDTO> dtos = new ArrayList<>();
-        for (Object[] result : results) {
-            Customer customer = (Customer) result[0];
-            CustomerImage customerImage = (CustomerImage) result[1];
-            CustomerDTO customerDTO = popoteMapper.fromCustomer(customer);
-
-            ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
-            responseCustomerAndImageDTO.setCustomerDTO(customerDTO);
-            responseCustomerAndImageDTO.setUrlImage(customerImage.getUrl());
-            dtos.add(responseCustomerAndImageDTO);
-        }
-
-        return dtos;
+        return getResponseCustomerAndImageDTOS(results);
     }
 
     public List<ResponseCustomerAndImageDTO> getCustomersById(Long customerId) {
         List<Object[]> results = customerRepository.findCustomerWithImagesById(customerId);
+        return getResponseCustomerAndImageDTOS(results);
+
+    }
+
+    private List<ResponseCustomerAndImageDTO> getResponseCustomerAndImageDTOS(List<Object[]> results) {
         List<ResponseCustomerAndImageDTO> dtos = new ArrayList<>();
         for (Object[] result : results) {
             Customer customer = (Customer) result[0];
@@ -77,12 +68,12 @@ public class PopotoService {
         }
 
         return dtos;
-
     }
 
     public ResponseCustomerAndImageDTO AddCustomerAndImage(CustomerDTO customerDTO, MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
         Customer customer = popoteMapper.fromPostCustomerDTO(customerDTO);
-        customerRepository.save(customer);
+        Customer savedCustomer = customerRepository.save(customer);
+        customerDTO.setId(savedCustomer.getId());
         ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
         responseCustomerAndImageDTO.setCustomerDTO(customerDTO);
 

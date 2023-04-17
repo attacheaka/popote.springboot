@@ -36,7 +36,7 @@ public class PopoteController {
 
     @PostMapping(value = "/customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseCustomerAndImageDTO postCustomer(
-            @ModelAttribute CustomerDTO customerDTO,
+            @ModelAttribute  CustomerDTO customerDTO,
             @RequestParam(value = "image", required = false) MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
 
         return popotoService.AddCustomerAndImage(customerDTO, image);
