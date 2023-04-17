@@ -1,12 +1,15 @@
 package attache.devs.popote.services;
 import attache.devs.popote.dtos.PostCustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
+import attache.devs.popote.exceptions.FileIsNotImageException;
+import attache.devs.popote.exceptions.FileSizeNotValidException;
 import attache.devs.popote.mappers.PopoteMapper;
 import attache.devs.popote.models.Customer;
 import attache.devs.popote.models.CustomerImage;
 import attache.devs.popote.repositories.CustomerImageRepository;
 import attache.devs.popote.repositories.CustomerRepository;
 import attache.devs.popote.utils.FileParams;
+import attache.devs.popote.utils.FileValidator;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +37,10 @@ public class PopotoService {
     private final CustomerImageRepository customerImageRepository;
     private final PopoteMapper popoteMapper;
     private final FileParams fileParams;
+    private final FileValidator fileValidator;
 
 
-    public ResponseCustomerAndImageDTO AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException {
+    public ResponseCustomerAndImageDTO AddCustomerAndImage(PostCustomerDTO postCustomerDTO, MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
         Customer customer = popoteMapper.fromPostCustomerDTO(postCustomerDTO);
         customerRepository.save(customer);
         ResponseCustomerAndImageDTO responseCustomerAndImageDTO = new ResponseCustomerAndImageDTO();
@@ -51,7 +55,15 @@ public class PopotoService {
 
     }
 
-    private CustomerImage saveImage(Customer customer, MultipartFile image) throws IOException {
+    private CustomerImage saveImage(Customer customer, MultipartFile image) throws FileIsNotImageException, FileSizeNotValidException, IOException {
+
+        if (!fileValidator.isImage(image)) {
+            throw new FileIsNotImageException("Le fichier n'est pas une image valide.");
+        }
+
+        if (!fileValidator.isFileSizeValid(image)) {
+            throw new FileSizeNotValidException("La taille du fichier est supérieure à 2 MB.");
+        }
 
         String uniqueFilename = "customer_" + customer.getId();
         String extension = FilenameUtils.getExtension(image.getOriginalFilename());

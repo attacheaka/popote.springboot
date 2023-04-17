@@ -2,6 +2,8 @@ package attache.devs.popote.controllers;
 
 import attache.devs.popote.dtos.PostCustomerDTO;
 import attache.devs.popote.dtos.ResponseCustomerAndImageDTO;
+import attache.devs.popote.exceptions.FileIsNotImageException;
+import attache.devs.popote.exceptions.FileSizeNotValidException;
 import attache.devs.popote.services.PopotoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,7 @@ public class PopoteController {
     @PostMapping(value = "/customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseCustomerAndImageDTO postCustomer(
             @ModelAttribute PostCustomerDTO postCustomerDTO,
-            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException, FileIsNotImageException, FileSizeNotValidException {
 
         return popotoService.AddCustomerAndImage(postCustomerDTO, image);
     }
